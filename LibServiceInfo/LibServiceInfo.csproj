@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,8 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Condition.cs" />
+    <Compile Include="ConditionNode.cs" />
+    <Compile Include="ConditionValueNode.cs" />
+    <Compile Include="D3Node.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializationExtensions.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="ServiceBlock.cs" />
+    <Compile Include="ServiceFlow.cs" />
+    <Compile Include="ServiceNode.cs" />
+    <Compile Include="Service_Manager.cs" />
+    <Compile Include="SIPResponseNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,7 @@ namespace LibServiceInfo
     public class ServiceFlow
     {
 
-        public Dictionary<string, ServiceBlock> Blocks;
+        public Dictionary<string, Block> Blocks;
 
         public string FirstBlockGUID { get; set; }
 
@@ -16,7 +16,7 @@ namespace LibServiceInfo
 
         public ServiceFlow()
         {
-            Blocks = new Dictionary<string, ServiceBlock>();
+            Blocks = new Dictionary<string, Block>();
         }
         public ServiceFlow(String name)
         {
@@ -27,7 +27,7 @@ namespace LibServiceInfo
         {
             Init(name);
             FirstBlockGUID = rootNode.Children[0].InstanceGUID;
-            Dictionary<string, ServiceBlock> blocks = new Dictionary<string, ServiceBlock>();
+            Dictionary<string, Block> blocks = new Dictionary<string, Block>();
             CreateBlocks(blocks, rootNode);
             Blocks = blocks;
             RootNode = rootNode.d3Node;
@@ -35,15 +35,15 @@ namespace LibServiceInfo
 
         private void Init(String name)
         {
-            Blocks = new Dictionary<string, ServiceBlock>();
+            Blocks = new Dictionary<string, Block>();
             Name = name;
         }
 
        
 
-        private void CreateBlocks(Dictionary<string, ServiceBlock> blocks, Node node)
+        private void CreateBlocks(Dictionary<string, Block> blocks, Node node)
         {
-            ServiceBlock block = new ServiceBlock(node);
+            Block block = new Block(node);
             if (node.Children.Count > 0)
             {
                 foreach (Node child in node.Children)
@@ -52,11 +52,11 @@ namespace LibServiceInfo
                     {
                     case "ServiceNode":
                     case "ConditionNode":
-                        block.AddChild(child.Name,new ServiceBlock(child));
+                        block.AddChild(child.Name,new Block(child));
                         break;
                     case "ConditionValueNode":
                     case "SIPResponseNode":
-                        block.AddChild(child.InstanceGUID, new ServiceBlock(child));
+                        block.AddChild(child.InstanceGUID, new Block(child));
                         break;
                     default:
                         Console.WriteLine("Unkown node type" + child.GetType().Name);
@@ -77,8 +77,8 @@ namespace LibServiceInfo
 
         private void CreateBlocks(Node node)
         {
-            Blocks = new Dictionary<string, ServiceBlock>();
-            ServiceBlock block = new ServiceBlock(node);
+            Blocks = new Dictionary<string, Block>();
+            Block block = new Block(node);
             if (node.Children.Count > 0)
             {
                 foreach (Node child in node.Children)
@@ -87,11 +87,11 @@ namespace LibServiceInfo
                     {
                         case "ServiceNode":
                         case "ConditionNode":
-                            block.AddChild(child.Name, new ServiceBlock(child));
+                            block.AddChild(child.Name, new Block(child));
                             break;
                         case "ConditionValueNode":
                         case "SIPResponseNode":
-                            block.AddChild(child.InstanceGUID, new ServiceBlock(child));
+                            block.AddChild(child.InstanceGUID, new Block(child));
                             break;
                         default:
                             Console.WriteLine("Unkown node type" + child.GetType().Name);
@@ -120,7 +120,7 @@ namespace LibServiceInfo
         //    firstBlockGUIDxml.Value = FirstBlockGUID;
         //    rootNode.Attributes.Append(firstBlockGUIDxml);
         //    xmlDoc.AppendChild(rootNode);
-        //    foreach (KeyValuePair<string, ServiceBlock> kvp in Blocks)
+        //    foreach (KeyValuePair<string, Block> kvp in Blocks)
         //    {
         //        XmlNode block = xmlDoc.CreateElement("Service_Block");
         //        XmlAttribute attribute = xmlDoc.CreateAttribute("Attritbute");

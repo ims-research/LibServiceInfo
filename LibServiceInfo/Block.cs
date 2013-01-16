@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace LibServiceInfo
 {
-    public class ServiceBlock
+    public class Block
     {
         public string Name { get; set; }
         public string GlobalGUID { get; set; }
         public string InstanceGUID { get; set; }
 
-        public Dictionary<string, ServiceBlock> NextBlocks { get; set; }
-        public ServiceBlock ParentBlock { get; set; }
+        public Dictionary<string, Block> NextBlocks { get; set; }
+        public Block ParentBlock { get; set; }
         public BlockTypes BlockType { get; set; }
 
 
@@ -22,19 +22,19 @@ namespace LibServiceInfo
             SIPResponse
         }
 
-        public ServiceBlock()
+        public Block()
         {
-            NextBlocks = new Dictionary<string, ServiceBlock>();
+            NextBlocks = new Dictionary<string, Block>();
         }
 
-        public void AddChild(string key, ServiceBlock block)
+        public void AddChild(string key, Block block)
         {
             NextBlocks.Add(key, block);
         }
 
-        public ServiceBlock(Node node)
+        public Block(Node node)
         {
-            NextBlocks = new Dictionary<string, ServiceBlock>();
+            NextBlocks = new Dictionary<string, Block>();
             Name = node.Name;
             GlobalGUID = node.GlobalGUID;
             InstanceGUID = node.InstanceGUID;

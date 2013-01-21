@@ -39,35 +39,34 @@ namespace LibServiceInfo
             Name = name;
         }
 
-       
-
+        //Flat Tree
         private void CreateBlocks(Dictionary<string, Block> blocks, Node node)
         {
             Block block = new Block(node);
             if (node.Children.Count > 0)
             {
-                foreach (Node child in node.Children)
-                {
-                    switch (node.GetType().Name)
-                    {
-                    case "ServiceNode":
-                    case "ConditionNode":
-                        block.AddChild(child.Name,new Block(child));
-                        break;
-                    case "ConditionValueNode":
-                    case "SIPResponseNode":
-                        block.AddChild(child.InstanceGUID, new Block(child));
-                        break;
-                    default:
-                        Console.WriteLine("Unkown node type" + child.GetType().Name);
-                        break;
-                    }
-                }
+                //foreach (Node child in node.Children)
+                //{
+                //    switch (node.GetType().Name)
+                //    {
+                //    case "ServiceNode":
+                //    case "ConditionNode":
+                //        block.AddChild(child.Name,new Block(child));
+                //        break;
+                //    case "ConditionValueNode":
+                //    case "SIPResponseNode":
+                //        block.AddChild(child.InstanceGUID, new Block(child));
+                //        break;
+                //    default:
+                //        Console.WriteLine("Unkown node type" + child.GetType().Name);
+                //        break;
+                //    }
+                //}
                 if (node.Name != "Start")
                 {
                     blocks.Add(block.InstanceGUID, block);
                 }
-                // Double loop to maintain tree order
+                 //Double loop to maintain tree order
                 foreach (Node child in node.Children)
                 {
                     CreateBlocks(blocks, child);
@@ -78,59 +77,7 @@ namespace LibServiceInfo
         private void CreateBlocks(Node node)
         {
             Blocks = new Dictionary<string, Block>();
-            Block block = new Block(node);
-            if (node.Children.Count > 0)
-            {
-                foreach (Node child in node.Children)
-                {
-                    switch (node.GetType().Name)
-                    {
-                        case "ServiceNode":
-                        case "ConditionNode":
-                            block.AddChild(child.Name, new Block(child));
-                            break;
-                        case "ConditionValueNode":
-                        case "SIPResponseNode":
-                            block.AddChild(child.InstanceGUID, new Block(child));
-                            break;
-                        default:
-                            Console.WriteLine("Unkown node type" + child.GetType().Name);
-                            break;
-                    }
-                }
-                if (node.Name != "Start")
-                {
-                    Blocks.Add(block.InstanceGUID, block);
-                }
-                // Double loop to maintain tree order
-                foreach (Node child in node.Children)
-                {
-                    CreateBlocks(Blocks, child);
-                }
-            }
+            CreateBlocks(Blocks,node);
         }
-
-
-        // Not Needed for serialisation - might be useful in the future?
-        //public override string ToString()
-        //{
-        //    XmlDocument xmlDoc = new XmlDocument();
-        //    XmlNode rootNode = xmlDoc.CreateElement("Service_Chain");
-        //    XmlAttribute firstBlockGUIDxml = xmlDoc.CreateAttribute("FirstBlockGUID");
-        //    firstBlockGUIDxml.Value = FirstBlockGUID;
-        //    rootNode.Attributes.Append(firstBlockGUIDxml);
-        //    xmlDoc.AppendChild(rootNode);
-        //    foreach (KeyValuePair<string, Block> kvp in Blocks)
-        //    {
-        //        XmlNode block = xmlDoc.CreateElement("Service_Block");
-        //        XmlAttribute attribute = xmlDoc.CreateAttribute("Attritbute");
-        //        attribute.Value = "42";
-        //        block.Attributes.Append(attribute);
-        //        block.InnerText = "Text test";
-        //        rootNode.AppendChild(block);
-        //    }
-        //    return xmlDoc.ToString();
-        //}
-
     }
 }

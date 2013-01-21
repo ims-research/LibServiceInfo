@@ -8,6 +8,8 @@ namespace LibServiceInfo
         public string Name { get; set; }
         public string GlobalGUID { get; set; }
         public string InstanceGUID { get; set; }
+        public string DestURI { get; set; }
+        public string ConditionType { get; set; }
 
         public Dictionary<string, Block> NextBlocks { get; set; }
         public Block ParentBlock { get; set; }
@@ -42,9 +44,11 @@ namespace LibServiceInfo
             {
                 case "ServiceNode":
                     BlockType = BlockTypes.Service;
+                    DestURI = ServiceManager.ServiceList[node.GlobalGUID].ServiceConfig["Server_URI"];
                     break;
                 case "ConditionNode":
                     BlockType = BlockTypes.Condition;
+                    ConditionType = ServiceManager.ConditionList[node.GlobalGUID].Type;
                     break;
                 case "ConditionValueNode":
                     BlockType = BlockTypes.ConditionOption;
@@ -55,6 +59,37 @@ namespace LibServiceInfo
                 default:
                     Console.WriteLine("Unkown node type" + node.GetType().Name);
                     break;
+            }
+            if (node.Name != "Start")
+            {
+                FillBlocks(node, this);
+            }
+        }
+
+        //Pruned section of tree starting at node
+        private void FillBlocks(Node node, Block block)
+        {
+            if (node == null) return;
+            if (node.Children.Count > 0)
+            {
+                foreach (Node child in node.Children)
+                {
+                    switch (node.GetType().Name)
+                    {
+                        case "ServiceNode":
+                        case "ConditionNode":
+                           block.AddChild(child.Name, new Block(child));
+                            break;
+                        case "ConditionValueNode":
+                        case "SIPResponseNode":
+                            block.AddChild(child.InstanceGUID, new Block(child));
+                            break;
+                        default:
+                            Console.WriteLine("Unkown node type" + child.GetType().Name);
+                            break;
+                    }
+                    //FillBlocks(child, block);
+                }
             }
         }
     }

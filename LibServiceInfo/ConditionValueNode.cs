@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
+
+#endregion
 
 namespace LibServiceInfo
 {
     public class ConditionValueNode : Node
     {
-        public List<string> Values { get; set; }
-
         public ConditionValueNode(D3Node child) : base(child)
         {
             Values = new List<string>();
@@ -14,10 +16,10 @@ namespace LibServiceInfo
         }
 
         public ConditionValueNode()
-            : base()
         {
             Values = new List<string>();
         }
 
+        public List<string> Values { get; set; }
     }
 }

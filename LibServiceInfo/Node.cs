@@ -1,18 +1,21 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
+
+#endregion
 
 namespace LibServiceInfo
 {
     public class Node : Object
     {
-        public List<Node> Children { get; set; }
-        public string Name { get; set; }
-        public string GlobalGUID { get; set; }
-        public string InstanceGUID { get; set; }
-       
-        public Types NodeType { get; set; }
-        public enum Types { Service, Condition, ConditionOption, SIPResponse }
-        public D3Node d3Node { get; set; }
+        public enum Types
+        {
+            Service,
+            Condition,
+            ConditionOption,
+            SIPResponse
+        }
 
         public Node()
         {
@@ -46,9 +49,17 @@ namespace LibServiceInfo
                     default:
                         Console.WriteLine("Unkown node type" + child.type);
                         break;
-
                 }
             }
         }
+
+        public List<Node> Children { get; set; }
+        public string Name { get; set; }
+        public string GlobalGUID { get; set; }
+        public string InstanceGUID { get; set; }
+
+        public Types NodeType { get; set; }
+
+        public D3Node d3Node { get; set; }
     }
 }

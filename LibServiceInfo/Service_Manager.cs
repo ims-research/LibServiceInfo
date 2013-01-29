@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
+
+#endregion
 
 namespace LibServiceInfo
 {
     public class ServiceManager
     {
         public static Dictionary<string, Service> ServiceList = null;
-        public static Dictionary<string, Condition> ConditionList= null;
+        public static Dictionary<string, Condition> ConditionList = null;
 
         public static void LoadServices(string fromDirectory)
         {

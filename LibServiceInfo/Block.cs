@@ -1,21 +1,14 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
+
+#endregion
 
 namespace LibServiceInfo
 {
     public class Block
     {
-        public string Name { get; set; }
-        public string GlobalGUID { get; set; }
-        public string InstanceGUID { get; set; }
-        public string DestURI { get; set; }
-        public string ConditionType { get; set; }
-
-        public Dictionary<string, Block> NextBlocks { get; set; }
-        public Block ParentBlock { get; set; }
-        public BlockTypes BlockType { get; set; }
-
-
         public enum BlockTypes
         {
             Service,
@@ -27,11 +20,6 @@ namespace LibServiceInfo
         public Block()
         {
             NextBlocks = new Dictionary<string, Block>();
-        }
-
-        public void AddChild(string key, Block block)
-        {
-            NextBlocks.Add(key, block);
         }
 
         public Block(Node node)
@@ -66,6 +54,22 @@ namespace LibServiceInfo
             }
         }
 
+        public string Name { get; set; }
+        public string GlobalGUID { get; set; }
+        public string InstanceGUID { get; set; }
+        public string DestURI { get; set; }
+        public string ConditionType { get; set; }
+
+        public Dictionary<string, Block> NextBlocks { get; set; }
+        public Block ParentBlock { get; set; }
+        public BlockTypes BlockType { get; set; }
+
+
+        public void AddChild(string key, Block block)
+        {
+            NextBlocks.Add(key, block);
+        }
+
         //Pruned section of tree starting at node
         private void FillBlocks(Node node, Block block)
         {
@@ -78,7 +82,7 @@ namespace LibServiceInfo
                     {
                         case "ServiceNode":
                         case "ConditionNode":
-                           block.AddChild(child.Name, new Block(child));
+                            block.AddChild(child.Name, new Block(child));
                             break;
                         case "ConditionValueNode":
                         case "SIPResponseNode":

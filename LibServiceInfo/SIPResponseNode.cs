@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
+
+#endregion
 
 namespace LibServiceInfo
 {
     public class SIPResponseNode : Node
     {
-       public List<string> Values { get; set; }
-
         public SIPResponseNode(D3Node child) : base(child)
         {
             Values = new List<string>();
@@ -14,9 +16,10 @@ namespace LibServiceInfo
         }
 
         public SIPResponseNode()
-            : base()
         {
             Values = new List<string>();
         }
+
+        public List<string> Values { get; set; }
     }
 }
